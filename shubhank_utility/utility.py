@@ -3,6 +3,10 @@ import json
 import base64
 import requests
 from tldextract import extract
+from datetime import datetime
+
+from selenium.webdriver.chrome.options import Options
+from selenium import webdriver
 
 import logging
 logging.basicConfig(level=logging.ERROR)
@@ -166,6 +170,26 @@ def check(data, x):
     return False
 
 
+def sstrip(data):
+    """
+    This function strip the value if it is string.
+    """
+    if isinstance(data, str):
+        data = data.strip()
+    return data
+
+
+def format_date(date, format="%y-%m-%d"):
+    try:
+        date = datetime.strptime(date, format)
+    
+    except Exception as e:
+        print(e)
+    
+    finally:
+        return date
+
+
 def get_image(url):
     """
     This function will load the image from url and return base64 image.
@@ -187,3 +211,23 @@ def camel_to_snake(string):
     
     finally:
         return string
+
+
+def record_error(error, filename="error.txt", mode="a"):
+    """
+    Function to record the error in a text file.
+    """
+    with open(filename, mode, encoding="utf-8") as file:
+        file.write(str(error)+ "\n")
+
+
+def get_browser(chrome_path="chromedriver.exe", headless=False):
+    
+    options = Options()
+    if headless:
+        options.add_argument("headless")
+
+    browser = webdriver.Chrome(executable_path=chrome_path, chrome_options=options)
+    browser.maximize_window()
+
+    return browser

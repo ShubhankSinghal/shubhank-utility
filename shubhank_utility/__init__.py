@@ -30,6 +30,8 @@ import country_converter as coco
 from dateutil.parser import parse
 from urllib.parse import urlparse
 
+from user_agent import *
+
 import selenium
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
@@ -40,4 +42,5 @@ logging.basicConfig(level=logging.ERROR)
 
 from shubhank_utility.database import *
 from shubhank_utility.fuzzy_match import *
+from shubhank_utility.pdf_download import *
 from shubhank_utility.utility import *

@@ -1,14 +1,16 @@
-from setuptools import setup
+# from setuptools import setup
+from distutils.core import setup
 
 setup(
     name='shubhank_utility',
-    version='0.1.3',
-    description='A Python package for personal work',
-    # url='https://github.com/shuds13/pyexample',
-    author='Shubhank Singhal',
-    author_email='shubhank.singhal1@acuitykp.com',
-    # license='BSD 2-clause',
     packages=['shubhank_utility'],
+    version='0.0.1',
+    license='MIT',
+    description='A Python package for personal work',
+    author='Shubhank Singhal',
+    author_email='shubhank.singhal98@gmail.com',
+    url='https://github.com/ShubhankSinghal/shubhank-utility',
+    keywords=['SHUBHANK', 'SHUBHANK SINGHAL'],
     install_requires = [
         'pymongo',
         'requests',
@@ -24,11 +26,10 @@ setup(
         "numpy",
         "nltk"
     ],
-
     classifiers=[
-        # 'Development Status :: 1 - Planning',
-        # 'Intended Audience :: Science/Research',
-        # 'License :: OSI Approved :: BSD License',
+        'Development Status :: 1 - Planning',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
