@@ -2,7 +2,7 @@
 shubhank_utility.
 """
 
-_version_ = "0.0.1"
+_version_ = "0.0.2"
 _author_ = 'Shubhank Singhal'
 _credits_ = 'Shubhank Singhal'
 

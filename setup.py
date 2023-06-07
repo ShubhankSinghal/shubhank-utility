@@ -4,13 +4,14 @@ from distutils.core import setup
 setup(
     name='shubhank_utility',
     packages=['shubhank_utility'],
-    version='0.0.1',
+    version='0.0.2',
     license='MIT',
     description='A Python package for personal work',
     author='Shubhank Singhal',
     author_email='shubhank.singhal98@gmail.com',
     url='https://github.com/ShubhankSinghal/shubhank-utility',
-    keywords=['SHUBHANK', 'SHUBHANK SINGHAL'],
+    download_url='https://github.com/ShubhankSinghal/shubhank-utility/archive/refs/tags/0.0.1.tar.gz',
+    keywords=['SHUBHANK', 'SHUBHANKSINGHAL'],
     install_requires = [
         'pymongo',
         'requests',
@@ -24,7 +25,8 @@ setup(
         "python-Levenshtein",
         "pandas",
         "numpy",
-        "nltk"
+        "nltk",
+        "country-converter"
     ],
     classifiers=[
         'Development Status :: 1 - Planning',
@@ -41,7 +43,6 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: 3.11',
-        'Programming Language :: Python :: 3.*'
+        'Programming Language :: Python :: 3.11'
     ],
 )
