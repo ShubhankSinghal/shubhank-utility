@@ -41,7 +41,7 @@ def insert_many(database_name, collection_name, data, client=MongoClient()):
         client.close()
         
 
-def fetch_one(database_name, collection_name, query={}, project={}, client=MongoClient()):
+def fetch_one(database_name, collection_name, query={}, project=None, client=MongoClient()):
     """
     This function is used to fetch single data from the database.
     If query not provided, will return first record.
@@ -60,7 +60,7 @@ def fetch_one(database_name, collection_name, query={}, project={}, client=Mongo
         return results[0] if results else results
     
 
-def fetch_all(database_name, collection_name, query={}, project={}, client=MongoClient()):
+def fetch_all(database_name, collection_name, query={}, project=None, client=MongoClient()):
     """
     This function is used to fetch all data from the database based on query.
     if query not provided, whole collection will be returned.
