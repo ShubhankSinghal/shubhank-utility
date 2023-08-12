@@ -2,6 +2,7 @@ import re
 import json
 import base64
 import requests
+import pandas as pd
 from tldextract import extract
 from datetime import datetime
 
@@ -165,7 +166,35 @@ def check(data, x):
     """
     This function is to check if key is present in dict and have a valid value or not.
     """
-    if data and x in data and data[x] and str(data[x]) not in ["null", "None", "nan"]:
+    if isinstance(data, dict) and data and x and x in data:
+        if data[x] and str(data[x]) not in ["null", "None", "nan"]:
+            return True
+    return False
+
+
+def check_dataframe(data):
+    """
+    This function is to check if data is a dataframe with atleast one element.
+    """
+    if isinstance(data, pd.core.frame.DataFrame) and any(data) and len(data) >= 1:
+        return True
+    return False
+
+
+def check_list(data):
+    """
+    This function is to check if data is a list with atleast one element.
+    """
+    if data and isinstance(data, list) and len(data) >= 1:
+        return True
+    return False
+
+
+def check_dict(data):
+    """
+    This function is to check if data is a dict with atleast one key value pair.
+    """
+    if data and isinstance(data, dict) and len(data) >= 1:
         return True
     return False
 

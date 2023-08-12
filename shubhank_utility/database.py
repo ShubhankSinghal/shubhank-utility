@@ -14,8 +14,8 @@ def insert_one(database_name, collection_name, data, client=MongoClient()):
         mycol = mydb[collection_name]
         mycol.insert_one(data)
     
-    except Exception as e:
-        print(e)
+    except Exception as err:
+        print(err)
     
     finally:
         client.close()
@@ -34,8 +34,8 @@ def insert_many(database_name, collection_name, data, client=MongoClient()):
         else:
             mycol.insert_many(data, ordered=False)
     
-    except Exception as e:
-        print(e)
+    except Exception as err:
+        print(err)
     
     finally:
         client.close()
@@ -50,14 +50,14 @@ def fetch_one(database_name, collection_name, query={}, project=None, client=Mon
     try:
         db = client[database_name]
         col_name = db[collection_name]
-        results = list(col_name.find( query, project ))
+        results = col_name.find_one( query, project )
 
-    except Exception as e:
-        logging.error("\nerror: " + str(e) + "\n")
+    except Exception as err:
+        logging.error("\nerror: " + str(err) + "\n")
 
     finally:
         client.close()
-        return results[0] if results else results
+        return results
     
 
 def fetch_all(database_name, collection_name, query={}, project=None, client=MongoClient()):
@@ -71,8 +71,8 @@ def fetch_all(database_name, collection_name, query={}, project=None, client=Mon
         col_name = db[collection_name]
         results = list(col_name.find( query, project ))
 
-    except Exception as e:
-        logging.error("\nerror: " + str(e) + "\n")
+    except Exception as err:
+        logging.error("\nerror: " + str(err) + "\n")
 
     finally:
         client.close()
@@ -88,8 +88,8 @@ def delete_one(database_name, collection_name, query={}, client=MongoClient()):
         col_name = db[collection_name]
         col_name.delete_one( query )
 
-    except Exception as e:
-        logging.error("\nerror: " + str(e) + "\n")
+    except Exception as err:
+        logging.error("\nerror: " + str(err) + "\n")
 
     finally:
         client.close()
@@ -105,14 +105,14 @@ def delete_many(database_name, collection_name, query={}, client=MongoClient()):
         col_name = db[collection_name]
         col_name.delete_many( query )
 
-    except Exception as e:
-        logging.error("\nerror: " + str(e) + "\n")
+    except Exception as err:
+        logging.error("\nerror: " + str(err) + "\n")
 
     finally:
         client.close()
 
 
-def update_one(database_name, collection_name, query={}, update_value={}, client=MongoClient()):
+def update_one(database_name, collection_name, query={}, update_value={}, client=MongoClient(), upsert=False):
     """
     This function is used to update one record in the database.
     """
@@ -120,16 +120,16 @@ def update_one(database_name, collection_name, query={}, update_value={}, client
         db = client[database_name]
         col_name = db[collection_name]
         value = {'$set': update_value}
-        col_name.update_one(query, value)
+        col_name.update_one(query, value, upsert=upsert)
         
-    except Exception as e:
-        logging.error("\nerror: " + str(e) + "\n")
+    except Exception as err:
+        logging.error("\nerror: " + str(err) + "\n")
             
     finally:
         client.close()
 
 
-def update_one(database_name, collection_name, query={}, update_value={}, client=MongoClient()):
+def update_many(database_name, collection_name, query={}, update_value={}, client=MongoClient()):
     """
     This function is used to update all record in the database based on query.
     """
@@ -139,24 +139,24 @@ def update_one(database_name, collection_name, query={}, update_value={}, client
         value = {'$set': update_value}
         col_name.update_many(query, value)
         
-    except Exception as e:
-        logging.error("\nerror: " + str(e) + "\n")
+    except Exception as err:
+        logging.error("\nerror: " + str(err) + "\n")
             
     finally:
         client.close()
         
 
-def replace_one(database_name, collection_name, query, update_data, client=MongoClient()):
+def replace_one(database_name, collection_name, query, update_data, client=MongoClient(), upsert=False):
     """
     This function is used to replace one record in the database with updated or new record.
     """
     try:
         db = client[database_name]
         col_name = db[collection_name]
-        col_name.replace_one(query, update_data, upsert=True)
+        col_name.replace_one(query, update_data, upsert=upsert)
         
-    except Exception as e:
-        logging.error("\nerror: " + str(e) + "\n")
+    except Exception as err:
+        logging.error("\nerror: " + str(err) + "\n")
             
     finally:
         client.close()
@@ -171,8 +171,8 @@ def bulk_write(database_name, collection_name, data, client=MongoClient()):
         mycol = mydb[collection_name]
         mycol.bulk_write(data)
     
-    except Exception as e:
-        print(e)
+    except Exception as err:
+        print(err)
     
     finally:
         client.close()
@@ -187,8 +187,23 @@ def get_collection_names(database_name, client=MongoClient()):
         for col in db.list_collection_names():
             print(col)
 
-    except Exception as e:
-        print(e)
+    except Exception as err:
+        print(err)
+    
+    finally:
+        client.close()
+
+
+def get_databases_names(client=MongoClient()):
+    """
+    This function is to get the list of database names.
+    """
+    try:
+        for db in client.list_database_names():
+            print(db)
+
+    except Exception as err:
+        print(err)
     
     finally:
         client.close()

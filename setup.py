@@ -4,13 +4,13 @@ from distutils.core import setup
 setup(
     name='shubhank_utility',
     packages=['shubhank_utility'],
-    version='0.0.3',
+    version='0.0.4',
     license='MIT',
     description='A Python package for personal work',
     author='Shubhank Singhal',
     author_email='shubhank.singhal98@gmail.com',
     url='https://github.com/ShubhankSinghal/shubhank-utility',
-    download_url='https://github.com/ShubhankSinghal/shubhank-utility/archive/refs/tags/0.0.2.tar.gz',
+    download_url='https://github.com/ShubhankSinghal/shubhank-utility/archive/refs/tags/0.0.4.tar.gz',
     keywords=['SHUBHANK', 'SHUBHANKSINGHAL'],
     install_requires = [
         'pymongo',

@@ -35,8 +35,17 @@ def download_pdf(url, file_name, headers, language):
         print(response.status_code)
 
 
-def start(type, filename, company_name, language, link, parent_dir, zip=False, aws=False):
-
+def start(type, filename, pdf_name_column, grouping_column, link, parent_dir, zip=False, aws=False):
+    """
+        type="excel",                             # filetype: csv or excel
+        filename="pdf_download_input.xlsx",       # filename along with its path
+        pdf_name_column={file_name},                 # column name containing the file_name
+        grouping_column={grouping_column},               # column name by which it is to be grouped
+        link={urls_to_download},                  # column name containing the link
+        parent_dir="output",                      # create a folder and pass its path here
+        zip="zip -r tmp.zip output_folder,        # optional parameter: pdf.zip: output zip name; output: output folder name
+        aws="aws s3 cp tmp.zip  s3://{path}"      # optional parameter: pdf.zip: zip file to export; s3://raw-data/: s3 bucket name
+    """
     headers = {"User-Agent": "Chrome/51.0.2704.103"}
 
     if type == "excel":
@@ -44,38 +53,30 @@ def start(type, filename, company_name, language, link, parent_dir, zip=False, a
     elif type == "csv":
         df = pd.read_csv(filename)
     
-    data = df[[company_name, language, link]].values
+    data = df[[pdf_name_column, grouping_column, link]].values
 
     # parent_dir = "/home/ubuntu/environment/pdfs download/output"
-    directories = list(set(list(map(lambda x: x.lower().strip().capitalize(), list(df[language].values)))))
+    directories = list(
+        set(
+            list(
+                map(
+                    lambda x: x.lower().strip().capitalize(), 
+                    list(df[grouping_column].values)
+                )
+            )
+        )
+    )
 
     for directory in directories:
         path = os.path.join(parent_dir, directory)
         os.mkdir(path)
 
-
-    for i, x in enumerate(data[4000:]):
-        print(str(i+1) + "/" + str(len(data[4000:])))
-        # if str(x[1]).lower().strip().capitalize() == "English":
-        #     continue
+    for i, x in enumerate(data):
+        print(str(i+1) + "/" + str(len(data)))
         download_pdf(x[2], x[0], headers, x[1])
 
     if zip:
-        # os.system("zip -r pdf.zip output")
         os.system(zip)
-    
+
     if aws:
-        # os.system("aws s3 cp pdfs1.zip  s3://raw-data/")
         os.system(aws)
-
-
-# start(
-#     type="excel",                                          # filetype: csv or excel
-#     filename="pdf_download_input.xlsx",                          # filename along with its path
-#     company_name="Company Name",                         # column name containing the company_name
-#     language="Language",                                 # column name containing the language
-#     link="Links",                                        # column name containing the link
-#     parent_dir="output"                  # create a folder and pass its path here
-#     ,zip="zip -r India_05_26-04-2023.zip output",                         # optional parameter: pdf.zip: output zip name; output: output folder name
-#     aws="aws s3 cp India_05_26-04-2023.zip  s3://raw-data/" # optional parameter: pdf.zip: zip file to export; s3://raw-data/: s3 bucket name
-# )
