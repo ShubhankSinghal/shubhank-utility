@@ -36,6 +36,9 @@ import selenium
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 
+import opensearchpy
+from opensearchpy import OpenSearch, RequestsHttpConnection
+
 import logging
 logging.basicConfig(level=logging.ERROR)
 

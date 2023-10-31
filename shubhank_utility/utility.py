@@ -43,7 +43,7 @@ def read_json(filename, mode="r"):
 
 def write_file(data, filename, mode="w"):
     """
-    This function will create the json file.
+    This function will create the file.
     """
     try:
         with open(filename, mode) as file:
@@ -55,7 +55,7 @@ def write_file(data, filename, mode="w"):
 
 def read_file(filename, mode="r"):
     """
-    This function will read the json file.
+    This function will read the file.
     """
     data = None
     try:
@@ -78,7 +78,7 @@ def get_domain(data):
     if data:
 
         if isinstance(data, str):
-            url = ".".join(extract(data)[1:])
+            url = extract(data).registered_domain
             return url if url else data
 
         elif isinstance(data, list):
@@ -87,7 +87,7 @@ def get_domain(data):
             for item in data:
 
                 try:
-                    url = ".".join(extract(item)[1:])
+                    url = extract(data).registered_domain
                     out = url if url else item
                     domains.add(out)
 
@@ -108,9 +108,10 @@ def get_website(data):
     if data:
 
         if isinstance(data, str):
-            data = list(extract(data))
-            data[0] = "www" if data[0] == "" else data[0]
-            url = "https://" + ".".join(data)
+            # data = list(extract(data))
+            # data[0] = "www" if data[0] == "" else data[0]
+            # url = "https://" + ".".join(data)
+            url = extract(data).fqdn
             return url if url else data
 
         elif isinstance(data, list):
@@ -119,9 +120,10 @@ def get_website(data):
             for item in data:
 
                 try:
-                    item_t = list(extract(item))
-                    item_t[0] = "www" if item_t[0] == "" else item_t[0]
-                    url = "https://" + ".".join(item_t)
+                    # item_t = list(extract(item))
+                    # item_t[0] = "www" if item_t[0] == "" else item_t[0]
+                    # url = "https://" + ".".join(item_t)
+                    url = extract(item).fqdn
                     out = url if url else item
                     domains.add(out)
 
